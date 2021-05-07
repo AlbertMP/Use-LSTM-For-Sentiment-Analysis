@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>情态分析</title>
+</head>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<body>
+<div style="padding:3px 2px;border-bottom:1px solid #ccc;background-color: darkred"><img src="static/jxxy_logo.png">
+</div>
+<div style="padding:3px 2px;border-bottom:1px solid #ccc">基于Adaboost的情感分析系统</div>
+
+<form id="demo_form">
+    <table>
+        <tr>
+            <td>输入语句:</td>
+            <td><input type="text" name="content"></input></td>
+            <td><input type="submit" value="提交"></input></td>
+        </tr>
+    </table>
+</form>
+<form>
+    <table>
+        <tr>
+            <td>分析结果:</td>
+            <td><input id="result" type="text" name="result"></input></td>
+        </tr>
+    </table>
+</form>
+
+</body>
+<script>
+
+    $("#demo_form").submit(function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: "/inference",
+            type: 'POST',
+            data: $(this).serialize(),   // 这个序列化传递很重要
+            success: function (resp) {
+                console.log(resp.Result)
+                document.getElementById("result").value = resp.Result;
+            }
+        })
+    });
+
+</script>
+</html>
